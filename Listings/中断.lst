@@ -1,4 +1,4 @@
-C51 COMPILER V9.55   ____                                                                  05/28/2024 12:48:34 PAGE 1   
+C51 COMPILER V9.55   ____                                                                  05/28/2024 12:52:28 PAGE 1   
 
 
 C51 COMPILER V9.55, COMPILATION OF MODULE ____
@@ -8,10 +8,49 @@ COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE ÖÐ¶Ï.c OPTIMIZE(8,SPEED) BROWSE DE
 
 line level    source
 
+   1          #include "reg52.h"
+   2          
+   3          typedef unsigned char u8;
+   4          typedef unsigned int u16; 
+   5          typedef unsigned long int u32;
+   6                         
+   7          
+   8          sbit KEY = P3^2; 
+   9          sbit LED = P2^0; 
+  10          
+  11          
+  12          void initInterrupt0()
+  13          {
+  14   1        EX0 = 1;
+  15   1        IT0 = 1;
+  16   1        EA  = 1;
+  17   1      }
+  18          
+  19          void delay(u8 i)
+  20          {
+  21   1        while(i--);
+  22   1      }
+  23          void main()
+  24          {
+  25   1      
+  26   1        initInterrupt0();
+  27   1        while(1);
+  28   1      
+  29   1      }
+  30          
+  31          
+  32          void interruptHandler() interrupt 0
+  33          {
+  34   1        delay(12000); 
+  35   1        if(KEY == 0)  
+  36   1        {
+  37   2          LED = ~LED;    
+  38   2        }
+  39   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   ----    ----
+   CODE SIZE        =     49    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

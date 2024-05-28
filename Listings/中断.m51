@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        05/28/2024  12:48:34  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/28/2024  12:52:28  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -12,7 +12,6 @@ MEMORY MODEL: SMALL
 INPUT MODULES INCLUDED:
   .\Objects\STARTUP.obj (?C_STARTUP)
   .\Objects\中断.obj (____)
-  D:\KEIL5\C51\LIB\C51S.LIB (?C_INIT)
 
 
 LINK MAP OF MODULE:  .\Objects\中断 (?C_STARTUP)
@@ -27,9 +26,13 @@ LINK MAP OF MODULE:  .\Objects\中断 (?C_STARTUP)
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-                    0003H     07FDH                  *** GAP ***
-            CODE    0800H     008CH     UNIT         ?C_C51STARTUP
-            CODE    088CH     0001H     UNIT         ?C_INITSEG
+            CODE    0003H     0003H     ABSOLUTE     
+                    0006H     07FAH                  *** GAP ***
+            CODE    0800H     001EH     UNIT         ?PR?INTERRUPTHANDLER?____
+            CODE    081EH     000CH     UNIT         ?C_C51STARTUP
+            CODE    082AH     0007H     UNIT         ?PR?INITINTERRUPT0?____
+            CODE    0831H     0007H     UNIT         ?PR?_DELAY?____
+            CODE    0838H     0005H     UNIT         ?PR?MAIN?____
 
 
 
@@ -40,12 +43,15 @@ SEGMENT
   +--> CALLED SEGMENT
 ---------------------
 ?C_C51STARTUP
-  +--> ?C_INITSEG
+  +--> ?PR?MAIN?____
 
+?PR?MAIN?____
+  +--> ?PR?INITINTERRUPT0?____
 
+*** NEW ROOT ***************************************************
 
-UNRESOLVED EXTERNAL SYMBOLS:
-   MAIN
+?PR?INTERRUPTHANDLER?____
+  +--> ?PR?_DELAY?____
 
 
 
@@ -53,22 +59,22 @@ SYMBOL TABLE OF MODULE:  .\Objects\中断 (?C_STARTUP)
 
   VALUE           TYPE          NAME
   ----------------------------------
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/28/2024  12:52:28  PAGE 2
+
+
 
   -------         MODULE        ?C_STARTUP
-  C:0800H         SEGMENT       ?C_C51STARTUP
+  C:081EH         SEGMENT       ?C_C51STARTUP
   I:0008H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
-BL51 BANKED LINKER/LOCATER V6.22                                                      05/28/2024  12:48:34  PAGE 2
-
-
   D:00F0H         SYMBOL        B
   D:0083H         SYMBOL        DPH
   D:0082H         SYMBOL        DPL
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:0803H         SYMBOL        IDATALOOP
+  C:0821H         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
   N:0100H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
@@ -77,36 +83,78 @@ SYMBOL TABLE OF MODULE:  .\Objects\中断 (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:0800H         SYMBOL        STARTUP1
+  C:081EH         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
-  C:0800H         LINE#         133
-  C:0802H         LINE#         134
-  C:0803H         LINE#         135
-  C:0804H         LINE#         136
-  C:0806H         LINE#         185
-  C:0809H         LINE#         196
+  C:081EH         LINE#         133
+  C:0820H         LINE#         134
+  C:0821H         LINE#         135
+  C:0822H         LINE#         136
+  C:0824H         LINE#         185
+  C:0827H         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        ____
   C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  C:0831H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:0838H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0800H         PUBLIC        interruptHandler
+  C:082AH         PUBLIC        initInterrupt0
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:00A0H.0       PUBLIC        LED
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.2       PUBLIC        KEY
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          INITINTERRUPT0
+  C:082AH         LINE#         12
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/28/2024  12:52:28  PAGE 3
+
+
+  C:082AH         LINE#         13
+  C:082AH         LINE#         14
+  C:082CH         LINE#         15
+  C:082EH         LINE#         16
+  C:0830H         LINE#         17
+  -------         ENDPROC       INITINTERRUPT0
+  -------         PROC          _DELAY
+  D:0007H         SYMBOL        i
+  C:0831H         LINE#         19
+  C:0831H         LINE#         20
+  C:0831H         LINE#         21
+  C:0837H         LINE#         22
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  C:0838H         LINE#         23
+  C:0838H         LINE#         24
+  C:0838H         LINE#         26
+  C:083BH         LINE#         27
+  -------         ENDPROC       MAIN
+  -------         PROC          INTERRUPTHANDLER
+  C:0800H         LINE#         32
+  C:080BH         LINE#         34
+  C:0810H         LINE#         35
+  C:0813H         LINE#         36
+  C:0813H         LINE#         37
+  C:0815H         LINE#         38
+  C:0815H         LINE#         39
+  -------         ENDPROC       INTERRUPTHANDLER
   -------         ENDMOD        ____
 
-*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
-    SYMBOL:  MAIN
-    MODULE:  D:\KEIL5\C51\LIB\C51S.LIB (?C_INIT)
-
-*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
-    SYMBOL:  MAIN
-    MODULE:  D:\KEIL5\C51\LIB\C51S.LIB (?C_INIT)
-    ADDRESS: 080DH
-
 ******************************************************************************
-* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 000FH BYTE ( 0%) *
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0043H BYTE ( 3%) *
 ******************************************************************************
 
-Program Size: data=9.0 xdata=0 code=144
-LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)
+Program Size: data=9.0 xdata=0 code=67
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
